@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/17 15:29:55 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:35:33 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*monitor(void *ptr)
 	int			idx;
 	int			phil_num;
 
-
+	usleep(100);
 	s = (t_status *)ptr;
 	while (1)
 	{

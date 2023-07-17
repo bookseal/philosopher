@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 14:17:57 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/17 16:22:05 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/17 17:10:38 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ size_t		get_time_in_ms(void);
 void		sleep_in_ms(int sleep_ms);
 void		thread_finish(t_status *s);
 void		*monitor(void *ptr);
-void		thread_create(t_phil *phil_arr, t_status *status);
+void		thread_create(t_status **status);
 void		*philo(void *ptr);
-t_phil		*init(t_status *status);
+t_phil		*init(t_status **status);
 t_status	*parsing(int argc, char **argv);
 int			ft_atoi(const char *str);
 void		*ft_calloc(size_t count, size_t size);

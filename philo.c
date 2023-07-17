@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:12 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/17 16:27:59 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/17 19:54:02 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	philo_loop(t_phil *p, int left_fork, int right_fork, int total_phil)
 		print(get_time_in_ms(), p->s->start, p->phil_num, "is sleeping");
 		sleep_in_ms(p->s->time_to_sleep);
 		print(get_time_in_ms(), p->s->start, p->phil_num, "is thinking");
-		if (++nb_of_times_eaten == p->s->num_must_eat)
+		nb_of_times_eaten++;
+		if (nb_of_times_eaten == p->s->num_must_eat)
 		{
 			p->s->is_finish[p->phil_num] = true;
 			break ;
@@ -69,6 +70,7 @@ void	*philo(void *ptr)
 	int		total_phil;
 
 	p = (t_phil *)ptr;
+	printf("total_phil = %d\n", p->phil_num);
 	left_fork = p->phil_num;
 	total_phil = p->s->total_phil;
 	if (total_phil == 1)

@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 20:21:20 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/17 14:36:29 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/17 19:43:59 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_status	*parsing(int argc, char **argv)
 		printf("number of philosopher must be over 1.\n");
 		exit(1);
 	}
-	status = (t_status *)ft_calloc(1, sizeof(t_status *));
+	status = (t_status *)ft_calloc(1, sizeof(t_status));
 	status->total_phil = argv_int[1];
 	status->time_to_die = argv_int[2];
 	status->time_to_eat = argv_int[3];
