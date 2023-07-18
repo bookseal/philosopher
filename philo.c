@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: leegichan <leegichan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:12 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/17 19:54:02 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/19 03:11:47 by leegichan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	swap_forks_if_needed(int *left_fork, int *right_fork)
 		*right_fork = *left_fork;
 		*left_fork = temp;
 	}
-
 }
 
 void	philo_loop(t_phil *p, int left_fork, int right_fork, int total_phil)
@@ -70,7 +69,6 @@ void	*philo(void *ptr)
 	int		total_phil;
 
 	p = (t_phil *)ptr;
-	printf("total_phil = %d\n", p->phil_num);
 	left_fork = p->phil_num;
 	total_phil = p->s->total_phil;
 	if (total_phil == 1)

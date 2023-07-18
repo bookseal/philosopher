@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: leegichan <leegichan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:12:20 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/17 15:21:45 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/19 03:16:14 by leegichan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ void	sleep_in_ms(int sleep_ms)
 	size_t	start_ms;
 
 	start_ms = get_time_in_ms();
-	while (start_ms + (size_t)sleep_ms > get_time_in_ms())
+	while (get_time_in_ms() - start_ms < sleep_ms)
 		usleep(100);
 }
