@@ -6,7 +6,7 @@
 /*   By: leegichan <leegichan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:12:20 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/19 03:16:14 by leegichan        ###   ########.fr       */
+/*   Updated: 2023/07/19 04:01:39 by leegichan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ void	sleep_in_ms(int sleep_ms)
 	size_t	start_ms;
 
 	start_ms = get_time_in_ms();
-	while (get_time_in_ms() - start_ms < sleep_ms)
+	while (get_time_in_ms() - start_ms < (size_t)sleep_ms)
 		usleep(100);
 }

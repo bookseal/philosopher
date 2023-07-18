@@ -6,7 +6,7 @@
 /*   By: leegichan <leegichan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:12 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/19 03:11:47 by leegichan        ###   ########.fr       */
+/*   Updated: 2023/07/19 04:01:16 by leegichan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,18 @@ void	swap_forks_if_needed(int *left_fork, int *right_fork)
 	}
 }
 
-void	philo_loop(t_phil *p, int left_fork, int right_fork, int total_phil)
+bool	is_finish(int *nb_of_times_eaten, t_phil *p)
+{
+	*nb_of_times_eaten += 1;
+	if (*nb_of_times_eaten == p->s->num_must_eat)
+	{
+		p->s->is_finish[p->phil_num] = true;
+		return (true);
+	}
+	return (false);
+}
+
+void	philo_loop(t_phil *p, int left_fork, int right_fork)
 {
 	int			nb_of_times_eaten;
 
@@ -43,7 +54,7 @@ void	philo_loop(t_phil *p, int left_fork, int right_fork, int total_phil)
 		pthread_mutex_lock(&p->s->forks[right_fork]);
 		print(get_time_in_ms(), p->s->start, p->phil_num, "has taken a fork");
 		print(get_time_in_ms(), p->s->start, p->phil_num, "has taken a fork");
-		usleep(0);
+		usleep(10);
 		print(get_time_in_ms(), p->s->start, p->phil_num, "is eating");
 		sleep_in_ms(p->s->time_to_eat);
 		p->s->last_meal[p->phil_num] = get_time_in_ms();
@@ -52,12 +63,8 @@ void	philo_loop(t_phil *p, int left_fork, int right_fork, int total_phil)
 		print(get_time_in_ms(), p->s->start, p->phil_num, "is sleeping");
 		sleep_in_ms(p->s->time_to_sleep);
 		print(get_time_in_ms(), p->s->start, p->phil_num, "is thinking");
-		nb_of_times_eaten++;
-		if (nb_of_times_eaten == p->s->num_must_eat)
-		{
-			p->s->is_finish[p->phil_num] = true;
+		if (is_finish(&nb_of_times_eaten, p))
 			break ;
-		}
 	}
 }
 
@@ -80,6 +87,6 @@ void	*philo(void *ptr)
 	swap_forks_if_needed(&left_fork, &right_fork);
 	if (p->phil_num % 2 == 1)
 		usleep(100);
-	philo_loop(p, left_fork, right_fork, total_phil);
+	philo_loop(p, left_fork, right_fork);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: leegichan <leegichan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/19 03:33:39 by leegichan        ###   ########.fr       */
+/*   Updated: 2023/07/19 04:00:36 by leegichan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	*monitor(void *ptr)
 		while (idx < s->total_phil)
 		{
 			current_ms = get_time_in_ms();
-			if (current_ms - s->last_meal[idx] > s->time_to_die)
+			if (current_ms - s->last_meal[idx] > (size_t)s->time_to_die)
 			{
 				print(current_ms, s->start, idx, "died");
 				exit(1);
