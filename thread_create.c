@@ -6,7 +6,7 @@
 /*   By: leegichan <leegichan@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:00:53 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/19 03:45:39 by leegichan        ###   ########.fr       */
+/*   Updated: 2023/07/19 04:09:16 by leegichan        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,11 @@ t_phil	**create_phil_arr(t_status **status)
 	return (phil_arr);
 }
 
-void	thread_create(t_status **status)
+void	create_even_and_odd(t_status **status, t_phil **phil_arr)
 {
-	t_phil		**phil_arr;
-	t_status	*s;
+	t_status 	*s;
 	int			i;
 	
-	phil_arr = create_phil_arr(status);
 	s = *status;
 	i = 0;
 	while (i < s->total_phil)
@@ -51,7 +49,26 @@ void	thread_create(t_status **status)
 		s->last_meal[i] = s->start[i];
 		pthread_mutex_init(&(s->forks[i]), NULL);
 		pthread_create(&s->phil_threads[i], NULL, philo, phil_arr[i]);
-		i++;
+		i += 2;
 	}
+	i = 1;
+	while (i < s->total_phil)
+	{
+		s->start[i] = get_time_in_ms();
+		s->last_meal[i] = s->start[i];
+		pthread_mutex_init(&(s->forks[i]), NULL);
+		pthread_create(&s->phil_threads[i], NULL, philo, phil_arr[i]);
+		i += 2;
+	}
+}
+
+void	thread_create(t_status **status)
+{
+	t_status	*s;
+	t_phil		**phil_arr;
+
+	s = *status;
+	phil_arr = create_phil_arr(status);
+	create_even_and_odd(status, phil_arr);
 	pthread_create(&(s->phil_threads[s->total_phil]), NULL, monitor, s);
 }
