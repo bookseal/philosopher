@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leegichan <leegichan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/19 04:00:36 by leegichan        ###   ########.fr       */
+/*   Updated: 2023/07/19 18:30:59 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,22 @@ void	is_finish_all(t_status *s)
 
 void	*monitor(void *ptr)
 {
+	t_phil		**phil_arr;
 	t_status	*s;
-	size_t		current_ms;
 	int			idx;
 
-	s = (t_status *)ptr;
+	phil_arr = (t_phil **)ptr;
+	s = phil_arr[0]->s;
 	while (1)
 	{
 		idx = 0;
 		while (idx < s->total_phil)
 		{
-			current_ms = get_time_in_ms();
-			if (current_ms - s->last_meal[idx] > (size_t)s->time_to_die)
+			if (get_time_in_ms() > s->last_meal[idx] + (size_t)s->time_to_die)
 			{
-				print(current_ms, s->start, idx, "died");
-				exit(1);
+				print(get_time_in_ms(), s->start, idx, "died");
+				s->is_died = true;
+				thread_finish(s, phil_arr);
 			}
 			idx++;
 		}

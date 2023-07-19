@@ -3,44 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   thread_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leegichan <leegichan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:00:53 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/19 04:09:16 by leegichan        ###   ########.fr       */
+/*   Updated: 2023/07/19 17:11:10 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-t_phil	**create_phil_arr(t_status **status)
-{
-	t_phil		**phil_arr;
-	int			i;
-	t_status	*s;
-
-	s = *status;
-	s->start = (size_t *)ft_calloc(s->total_phil, sizeof(size_t));
-	s->last_meal = (size_t *)ft_calloc(s->total_phil, sizeof(size_t));
-	s->phil_threads = (pthread_t *)ft_calloc(s->total_phil + 1, sizeof(pthread_t));
-	s->forks = ft_calloc(s->total_phil, sizeof(pthread_mutex_t));
-	s->is_finish = (bool *)ft_calloc(s->total_phil, sizeof(bool));
-	phil_arr = (t_phil **)ft_calloc(s->total_phil, sizeof(t_phil *));
-	i = 0;
-	while (i < s->total_phil)
-	{
-		phil_arr[i] = (t_phil *)ft_calloc(1, sizeof(t_phil));
-		phil_arr[i]->phil_num = i;
-		phil_arr[i]->s = s;
-		i++;
-	}
-	return (phil_arr);
-}
-
 void	create_even_and_odd(t_status **status, t_phil **phil_arr)
 {
-	t_status 	*s;
+	t_status	*s;
 	int			i;
-	
+
 	s = *status;
 	i = 0;
 	while (i < s->total_phil)
@@ -62,13 +38,40 @@ void	create_even_and_odd(t_status **status, t_phil **phil_arr)
 	}
 }
 
-void	thread_create(t_status **status)
+t_phil	**create_phil_arr(t_status **status)
+{
+	t_phil		**phil_arr;
+	int			i;
+	t_status	*s;
+
+	s = *status;
+	s->start = (size_t *)ft_calloc(s->total_phil, sizeof(size_t));
+	s->last_meal = (size_t *)ft_calloc(s->total_phil, sizeof(size_t));
+	s->phil_threads = ft_calloc(s->total_phil + 1, sizeof(pthread_t));
+	s->forks = ft_calloc(s->total_phil, sizeof(pthread_mutex_t));
+	s->is_finish = (bool *)ft_calloc(s->total_phil, sizeof(bool));
+	phil_arr = (t_phil **)ft_calloc(s->total_phil, sizeof(t_phil *));
+	i = 0;
+	while (i < s->total_phil)
+	{
+		phil_arr[i] = (t_phil *)ft_calloc(1, sizeof(t_phil));
+		phil_arr[i]->phil_num = i;
+		phil_arr[i]->s = s;
+		i++;
+	}
+	return (phil_arr);
+}
+
+t_phil	**thread_create(t_status **status)
 {
 	t_status	*s;
 	t_phil		**phil_arr;
+	int			total;
 
 	s = *status;
+	total = s->total_phil;
 	phil_arr = create_phil_arr(status);
 	create_even_and_odd(status, phil_arr);
-	pthread_create(&(s->phil_threads[s->total_phil]), NULL, monitor, s);
+	pthread_create(&(s->phil_threads[total]), NULL, monitor, phil_arr);
+	return (phil_arr);
 }

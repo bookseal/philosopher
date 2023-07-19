@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leegichan <leegichan@student.42.fr>        +#+  +:+       +#+        */
+/*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 14:17:57 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/19 03:44:00 by leegichan        ###   ########.fr       */
+/*   Updated: 2023/07/19 17:50:20 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_status
 	pthread_t		*phil_threads;
 	pthread_mutex_t	*forks;
 	bool			*is_finish;
+	bool			is_died;
 }	t_status;
 
 typedef struct s_phil
@@ -43,12 +44,14 @@ typedef struct s_phil
 void		print(size_t time, size_t *start, int phil_num, char *message);
 size_t		get_time_in_ms(void);
 void		sleep_in_ms(int sleep_ms);
-void		thread_finish(t_status *s);
+void		thread_finish(t_status *s, t_phil **phil_arr);
 void		*monitor(void *ptr);
-void		thread_create(t_status **status);
+t_phil		**thread_create(t_status **status);
 void		*philo(void *ptr);
 t_status	*parsing(int argc, char **argv);
 int			ft_atoi(const char *str);
 void		*ft_calloc(size_t count, size_t size);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+size_t		ft_strlen(const char *s);
 
 #endif
