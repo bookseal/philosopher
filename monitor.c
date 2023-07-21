@@ -6,12 +6,13 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/19 18:30:59 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/21 20:19:30 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+// FIXME: do not die
 void	is_finish_all(t_status *s)
 {
 	int	done;

@@ -54,7 +54,7 @@ int	ft_atoi(const char *str)
 	s = 1;
 	num_str = atoa_removed_spaces_sign((char *)str, &s);
 	if (num_str == 0 || *num_str == 0)
-		exit(1);
+		return (0);
 	res[0] = 0;
 	res[1] = 0;
 	while (*num_str != '\0')
@@ -65,12 +65,12 @@ int	ft_atoi(const char *str)
 		res[2] = res[0] / 10;
 		res[2] -= (*num_str - '0') / 10;
 		if (res[1] != res[2])
-			exit(1);
+			return (0);
 		res[1] = res[0];
 		num_str++;
 	}
 	if ((s == 1 && res[0] > 2147483647) || (s == -1 && res[0] > 2147483648))
-		exit(1);
+		return (0);
 	return ((int)(s * res[0]));
 }
 
@@ -97,7 +97,7 @@ void	*ft_calloc(size_t count, size_t size)
 
 	ptr = malloc(count * size);
 	if (ptr == 0)
-		exit(1);
+		return (0);
 	ft_bzero(ptr, count * size);
 	return (ptr);
 }
