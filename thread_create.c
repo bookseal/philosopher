@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:00:53 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/21 21:28:07 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/22 20:54:22 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	create_even_and_odd(t_phil **phil_arr)
 		get_time_and_create_thread(s, phil_arr, i);
 		i += 2;
 	}
-	usleep(phil_arr[0]->s->time_to_eat / 5);
+	usleep(phil_arr[0]->s->time_to_eat / 3);
 	i = 1;
 	while (i < s->total_phil)
 	{
@@ -53,7 +53,10 @@ void	init_mutex(t_status *s)
 		pthread_mutex_init(&(s->forks[i]), NULL);
 		i++;
 	}
-	// TODO: other mutex lock
+	pthread_mutex_init(&s->m_print, NULL);
+	pthread_mutex_init(&s->m_dead, NULL);
+	pthread_mutex_init(&s->m_last_meal, NULL);
+	pthread_mutex_init(&s->m_finished_phil, NULL);
 }
 
 void	thread_create(t_phil **phil_arr)
@@ -65,6 +68,7 @@ void	thread_create(t_phil **phil_arr)
 	total = s->total_phil;
 	init_mutex(s);
 	create_even_and_odd(phil_arr);
-	// pthread_create(&(s->phil_threads[total]), NULL, monitor, phil_arr);
+	usleep(phil_arr[0]->s->time_to_eat / 10);
+	pthread_create(&(s->phil_threads[total]), NULL, monitor, phil_arr);
 	return ;
 }

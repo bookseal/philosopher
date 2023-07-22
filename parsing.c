@@ -6,12 +6,11 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 20:21:20 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/21 20:54:45 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/22 19:59:26 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
-
 
 t_status	*parsing_error_free(char *msg, int *argv_int, t_status *status)
 {
@@ -37,7 +36,10 @@ t_status	*create_status(int *argv_int, int argc)
 	status->time_to_eat = argv_int[3];
 	status->time_to_sleep = argv_int[4];
 	if (argc == 6)
+	{
+		status->is_limit = true;
 		status->num_must_eat = argv_int[5];
+	}
 	if (argc == 6 && status->num_must_eat == 0)
 		return (parsing_error_free("invalid fifth argument", argv_int, status));
 	return (status);

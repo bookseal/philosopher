@@ -6,18 +6,26 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:12 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/21 21:26:42 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/22 21:11:57 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-bool	is_finish(int *nb_of_times_eaten, t_phil *p)
+bool	check_dead(t_phil *p)
 {
-	*nb_of_times_eaten += 1;
-	if (*nb_of_times_eaten == p->s->num_must_eat)
+	pthread_mutex_lock(&p->s->m_dead);
+	if (p->s->is_dead == true)
 	{
-		// p->is_finish[p->phil_num] = true;
+		pthread_mutex_unlock(&p->s->m_dead);
+		return (true);
+	}
+	pthread_mutex_unlock(&p->s->m_dead);
+	if (p->s->is_limit && p->count_eat == p->s->num_must_eat)
+	{
+		pthread_mutex_lock(&p->s->m_finished_phil);
+		p->s->finished_phil++;
+		pthread_mutex_unlock(&p->s->m_finished_phil);
 		return (true);
 	}
 	return (false);
@@ -27,10 +35,17 @@ void	philo_eating(t_phil *p, int left_fork, int right_fork)
 {
 	pthread_mutex_lock(&p->s->forks[left_fork]);
 	print(p, "has taken a fork");
+	if (check_dead(p))
+		return ;
 	pthread_mutex_lock(&p->s->forks[right_fork]);
 	print(p, "has taken a fork");
+	pthread_mutex_lock(&p->s->m_last_meal);
 	p->last_meal = get_time_in_ms();
+	if (check_dead(p))
+		return ;
+	pthread_mutex_unlock(&p->s->m_last_meal);
 	print(p, "is eating");
+	p->count_eat++;
 	sleep_in_ms(p->s->time_to_eat);
 	pthread_mutex_unlock(&p->s->forks[left_fork]);
 	pthread_mutex_unlock(&p->s->forks[right_fork]);
@@ -38,21 +53,16 @@ void	philo_eating(t_phil *p, int left_fork, int right_fork)
 
 void	philo_loop(t_phil *p, int left_fork, int right_fork)
 {
-	int			nb_of_times_eaten;
-
-	nb_of_times_eaten = 0;
-	while (1)
+	while (!check_dead(p))
 	{
 		philo_eating(p, left_fork, right_fork);
-		print(p, "is sleeping");
-		if (p->s->is_died)
-			return ;
-		sleep_in_ms(p->s->time_to_sleep);
-		if (p->s->is_died)
-			return ;
-		print(p, "is thinking");
-		if (is_finish(&nb_of_times_eaten, p))
+		if (check_dead(p))
 			break ;
+		print(p, "is sleeping");
+		sleep_in_ms(p->s->time_to_sleep);
+		if (check_dead(p))
+			break ;
+		print(p, "is thinking");
 		usleep(10);
 	}
 }
@@ -69,7 +79,7 @@ void	*philo(void *ptr)
 		usleep(10);
 	left_fork = p->phil_num;
 	total_phil = p->s->total_phil;
-	if (total_phil == 1)
+	while (total_phil == 1)
 	{
 		print(p, "has taken a fork");
 		return (NULL);

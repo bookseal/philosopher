@@ -6,51 +6,73 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/21 20:19:30 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/22 20:53:07 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-// FIXME: do not die
-void	is_finish_all(t_status *s)
+bool	is_finished_phil_same_total_phil(t_phil **phil_arr)
 {
-	int	done;
-	int	phil_num;
+	t_status	*s;
 
-	done = 0;
-	phil_num = s->total_phil;
-	while (phil_num--)
+	s = phil_arr[0]->s;
+	pthread_mutex_lock(&s->m_finished_phil);
+	if (s->finished_phil == s->total_phil)
 	{
-		if (s->is_finish[phil_num])
-			done++;
+		pthread_mutex_unlock(&s->m_finished_phil);
+		return (true);
 	}
-	if (done == s->total_phil)
-		exit(0);
+	pthread_mutex_unlock(&s->m_finished_phil);
+	return (false);
+}
+
+bool	is_one_dead(t_phil **phil_arr)
+{
+	t_status	*s;
+	int			idx;
+	size_t		last_meal;
+	size_t		t_die;
+
+	s = phil_arr[0]->s;
+	idx = 0;
+	while (idx < s->total_phil)
+	{
+		pthread_mutex_lock(&s->m_last_meal);
+		last_meal = phil_arr[idx]->last_meal;
+		pthread_mutex_unlock(&s->m_last_meal);
+		t_die = (size_t)s->time_to_die;
+		if (get_time_in_ms() > last_meal + t_die)
+		{
+			pthread_mutex_lock(&s->m_dead);
+			s->is_dead = true;
+			pthread_mutex_unlock(&s->m_dead);
+			print(phil_arr[idx], "died");
+			return (true);
+		}
+		idx++;
+	}
+	return (false);
 }
 
 void	*monitor(void *ptr)
 {
 	t_phil		**phil_arr;
-	t_status	*s;
-	int			idx;
 
 	phil_arr = (t_phil **)ptr;
-	s = phil_arr[0]->s;
 	while (1)
 	{
-		idx = 0;
-		while (idx < s->total_phil)
+		pthread_mutex_lock(&phil_arr[0]->s->m_dead);
+		if (phil_arr[0]->s->is_dead == true)
 		{
-			if (get_time_in_ms() > s->last_meal[idx] + (size_t)s->time_to_die)
-			{
-				print(get_time_in_ms(), s->start, idx, "died");
-				s->is_died = true;
-				thread_finish(s, phil_arr);
-			}
-			idx++;
+			pthread_mutex_unlock(&phil_arr[0]->s->m_dead);
+			return (NULL);
 		}
-		is_finish_all(s);
+		pthread_mutex_unlock(&phil_arr[0]->s->m_dead);
+		if (is_finished_phil_same_total_phil(phil_arr))
+			return (NULL);
+		if (is_one_dead(phil_arr))
+			return (NULL);
 		usleep(10);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:03:22 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/21 21:25:35 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/22 19:51:39 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_all(t_status *s, t_phil **phil_arr)
 	free(s->phil_threads);
 	free(s->forks);
 	i = 0;
-	while (i < s->total_phil + 1)
+	while (i < s->total_phil)
 	{
 		free(phil_arr[i]);
 		i++;
@@ -30,18 +30,22 @@ void	free_all(t_status *s, t_phil **phil_arr)
 void	thread_finish(t_phil **phil_arr)
 {
 	int			phil_num;
-	// pthread_t	*monitor_thread;
+	pthread_t	*monitor_thread;
 	t_status	*s;
 
 	s = phil_arr[0]->s;
 	phil_num = s->total_phil;
-	// monitor_thread = &(s->phil_threads[phil_num]);
-	// pthread_join(*monitor_thread, NULL);
+	monitor_thread = &(s->phil_threads[phil_num]);
+	pthread_join(*monitor_thread, NULL);
 	while (phil_num--)
 	{
 		pthread_join(s->phil_threads[phil_num], NULL);
 		pthread_mutex_destroy(&s->forks[phil_num]);
 	}
+	pthread_mutex_destroy(&s->m_dead);
+	pthread_mutex_destroy(&s->m_last_meal);
+	pthread_mutex_destroy(&s->m_print);
+	pthread_mutex_destroy(&s->m_finished_phil);
 	free_all(s, phil_arr);
 	return ;
 }

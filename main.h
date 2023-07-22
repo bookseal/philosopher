@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 14:17:57 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/21 21:24:01 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/22 19:59:13 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,15 @@ typedef struct s_status
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_must_eat;
+	bool			is_limit;
+	int				finished_phil;
 	pthread_t		*phil_threads;
 	pthread_mutex_t	*forks;
-	bool			is_died;
+	bool			is_dead;
+	pthread_mutex_t	m_print;
+	pthread_mutex_t	m_dead;
+	pthread_mutex_t	m_last_meal;
+	pthread_mutex_t	m_finished_phil;
 }	t_status;
 
 typedef struct s_phil
