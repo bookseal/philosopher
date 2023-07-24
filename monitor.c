@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/22 20:53:07 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/24 14:05:42 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	*monitor(void *ptr)
 			return (NULL);
 		if (is_one_dead(phil_arr))
 			return (NULL);
-		usleep(10);
+		usleep(0);
 	}
 	return (NULL);
 }

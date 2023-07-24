@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:12 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/22 21:11:57 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/24 14:09:56 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ void	philo_eating(t_phil *p, int left_fork, int right_fork)
 {
 	pthread_mutex_lock(&p->s->forks[left_fork]);
 	print(p, "has taken a fork");
+	pthread_mutex_lock(&p->s->forks[right_fork]);
 	if (check_dead(p))
 		return ;
-	pthread_mutex_lock(&p->s->forks[right_fork]);
 	print(p, "has taken a fork");
 	pthread_mutex_lock(&p->s->m_last_meal);
 	p->last_meal = get_time_in_ms();
+	pthread_mutex_unlock(&p->s->m_last_meal);
 	if (check_dead(p))
 		return ;
-	pthread_mutex_unlock(&p->s->m_last_meal);
 	print(p, "is eating");
 	p->count_eat++;
 	sleep_in_ms(p->s->time_to_eat);

@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:00:53 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/22 20:54:22 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/24 14:26:41 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ void	create_even_and_odd(t_phil **phil_arr)
 	while (i < s->total_phil)
 	{
 		get_time_and_create_thread(s, phil_arr, i);
+		usleep(1);
 		i += 2;
 	}
-	usleep(phil_arr[0]->s->time_to_eat / 3);
+	usleep(1);
 	i = 1;
 	while (i < s->total_phil)
 	{
 		get_time_and_create_thread(s, phil_arr, i);
+		usleep(1);
 		i += 2;
 	}
 }
@@ -68,7 +70,7 @@ void	thread_create(t_phil **phil_arr)
 	total = s->total_phil;
 	init_mutex(s);
 	create_even_and_odd(phil_arr);
-	usleep(phil_arr[0]->s->time_to_eat / 10);
+	usleep(100);
 	pthread_create(&(s->phil_threads[total]), NULL, monitor, phil_arr);
 	return ;
 }
