@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 17:58:47 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/21 21:23:51 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/24 16:53:08 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ int	main(int argc, char **argv)
 		return (0);
 	thread_create(phil_arr);
 	thread_finish(phil_arr);
+	return (0);
 }

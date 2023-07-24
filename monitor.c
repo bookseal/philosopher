@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/24 14:05:42 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:44:14 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	is_finished_phil_same_total_phil(t_phil **phil_arr)
 
 	s = phil_arr[0]->s;
 	pthread_mutex_lock(&s->m_finished_phil);
-	if (s->finished_phil == s->total_phil)
+	if (s->is_limit && s->finished_phil == s->total_phil)
 	{
 		pthread_mutex_unlock(&s->m_finished_phil);
 		return (true);
@@ -31,25 +31,24 @@ bool	is_one_dead(t_phil **phil_arr)
 {
 	t_status	*s;
 	int			idx;
-	size_t		last_meal;
 	size_t		t_die;
 
 	s = phil_arr[0]->s;
+	t_die = (size_t)s->time_to_die;
 	idx = 0;
 	while (idx < s->total_phil)
 	{
 		pthread_mutex_lock(&s->m_last_meal);
-		last_meal = phil_arr[idx]->last_meal;
-		pthread_mutex_unlock(&s->m_last_meal);
-		t_die = (size_t)s->time_to_die;
-		if (get_time_in_ms() > last_meal + t_die)
+		if (get_time_in_ms() > phil_arr[idx]->last_meal + t_die)
 		{
+			pthread_mutex_unlock(&s->m_last_meal);
 			pthread_mutex_lock(&s->m_dead);
 			s->is_dead = true;
 			pthread_mutex_unlock(&s->m_dead);
-			print(phil_arr[idx], "died");
+			print(get_time_in_ms(), phil_arr[idx], "died");
 			return (true);
 		}
+		pthread_mutex_unlock(&s->m_last_meal);
 		idx++;
 	}
 	return (false);

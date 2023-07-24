@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:00:53 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/24 14:26:41 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:26:22 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	get_time_and_create_thread(t_status *s, t_phil **phil_arr, int i)
 	pthread_create(&s->phil_threads[i], NULL, philo, phil_arr[i]);
 }
 
-void	create_even_and_odd(t_phil **phil_arr)
+void	create_phil_threads(t_phil **phil_arr)
 {
 	int			i;
 	t_status	*s;
@@ -33,15 +33,7 @@ void	create_even_and_odd(t_phil **phil_arr)
 	{
 		get_time_and_create_thread(s, phil_arr, i);
 		usleep(1);
-		i += 2;
-	}
-	usleep(1);
-	i = 1;
-	while (i < s->total_phil)
-	{
-		get_time_and_create_thread(s, phil_arr, i);
-		usleep(1);
-		i += 2;
+		i ++;
 	}
 }
 
@@ -69,7 +61,7 @@ void	thread_create(t_phil **phil_arr)
 	s = phil_arr[0]->s;
 	total = s->total_phil;
 	init_mutex(s);
-	create_even_and_odd(phil_arr);
+	create_phil_threads(phil_arr);
 	usleep(100);
 	pthread_create(&(s->phil_threads[total]), NULL, monitor, phil_arr);
 	return ;
