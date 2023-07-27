@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:00:53 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/27 17:04:21 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/27 22:38:16 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	create_phil_threads(t_phil **phil_arr)
 		phil_arr[i]->start = time;
 		pthread_create(&s->phil_threads[i], NULL, philo, phil_arr[i]);
 		usleep(1);
-		i ++;
+		i++;
 	}
 }
 
@@ -56,7 +56,6 @@ void	thread_create(t_phil **phil_arr)
 	total = s->total_phil;
 	init_mutex(s);
 	create_phil_threads(phil_arr);
-	usleep(100);
 	pthread_create(&(s->phil_threads[total]), NULL, monitor, phil_arr);
 	return ;
 }

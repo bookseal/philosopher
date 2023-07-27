@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 14:17:57 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/24 18:00:22 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/27 21:46:32 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_phil
 bool		finish_phil(t_phil *p);
 bool		check_dead(t_phil *p);
 t_phil		**malloc_phil_arr(t_status **status);
-void		print(size_t time, t_phil *p, char *msg);
+int			print(t_phil *p, char *msg);
 void		sleep_in_ms(int sleep_ms);
 void		thread_finish(t_phil **phil_arr);
 void		*monitor(void *ptr);

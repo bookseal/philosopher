@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/24 17:44:14 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/27 21:46:43 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	is_one_dead(t_phil **phil_arr)
 			pthread_mutex_lock(&s->m_dead);
 			s->is_dead = true;
 			pthread_mutex_unlock(&s->m_dead);
-			print(get_time_in_ms(), phil_arr[idx], "died");
+			print(phil_arr[idx], "died");
 			return (true);
 		}
 		pthread_mutex_unlock(&s->m_last_meal);
@@ -72,7 +72,7 @@ void	*monitor(void *ptr)
 			return (NULL);
 		if (is_one_dead(phil_arr))
 			return (NULL);
-		usleep(0);
+		usleep(10);
 	}
 	return (NULL);
 }
