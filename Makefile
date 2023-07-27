@@ -6,11 +6,12 @@
 #    By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/19 04:52:36 by leegichan         #+#    #+#              #
-#    Updated: 2023/07/24 18:00:30 by gichlee          ###   ########.fr        #
+#    Updated: 2023/07/27 16:48:10 by gichlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=philo
+CC=cc
 CFLAGS=-Wall -Wextra -Werror
 SRC= 	main.c \
 		monitor.c \

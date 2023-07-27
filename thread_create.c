@@ -6,32 +6,26 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:00:53 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/24 17:26:22 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:04:21 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	get_time_and_create_thread(t_status *s, t_phil **phil_arr, int i)
-{
-	size_t	time;
-
-	time = get_time_in_ms();
-	phil_arr[i]->last_meal = time;
-	phil_arr[i]->start = time;
-	pthread_create(&s->phil_threads[i], NULL, philo, phil_arr[i]);
-}
-
 void	create_phil_threads(t_phil **phil_arr)
 {
 	int			i;
 	t_status	*s;
+	size_t		time;
 
+	time = get_time_in_ms();
 	s = phil_arr[0]->s;
 	i = 0;
 	while (i < s->total_phil)
 	{
-		get_time_and_create_thread(s, phil_arr, i);
+		phil_arr[i]->last_meal = time;
+		phil_arr[i]->start = time;
+		pthread_create(&s->phil_threads[i], NULL, philo, phil_arr[i]);
 		usleep(1);
 		i ++;
 	}
