@@ -60,7 +60,7 @@ int	ft_atoi(const char *str)
 	while (*num_str != '\0')
 	{
 		if (!ft_isdigit(*num_str))
-			exit(1);
+			return (0);
 		res[0] = res[0] * 10 + (*num_str - '0');
 		res[2] = res[0] / 10;
 		res[2] -= (*num_str - '0') / 10;

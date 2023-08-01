@@ -6,13 +6,13 @@
 #    By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/19 04:52:36 by leegichan         #+#    #+#              #
-#    Updated: 2023/07/29 15:32:19 by gichlee          ###   ########.fr        #
+#    Updated: 2023/08/01 15:07:45 by gichlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=philo
 CC=cc
-#CFLAGS=-Wall -Wextra -Werror
+CFLAGS=-Wall -Wextra -Werror
 SRC= 	main.c \
 		monitor.c \
 		parsing.c \

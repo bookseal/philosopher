@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 20:21:20 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/22 19:59:26 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/01 15:08:27 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_status	*parsing(int argc, char **argv)
 	while (argv[idx] != NULL)
 	{
 		argv_int[idx] = ft_atoi(argv[idx]);
-		if (argv_int[idx] < 0)
+		if (argv_int[idx] <= 0)
 			return (parsing_error_free("only positive numbers", argv_int, 0));
 		idx++;
 	}

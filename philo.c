@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:12 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/29 15:37:12 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/01 15:09:36 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 bool	unlock_fork(t_phil *p, int left_fork, int right_fork)
 {
-	pthread_mutex_unlock(&p->s->forks[left_fork]);
 	p->s->forks_i[left_fork] = false;
-	pthread_mutex_unlock(&p->s->forks[right_fork]);
+	pthread_mutex_unlock(&p->s->forks[left_fork]);
 	p->s->forks_i[right_fork] = false;
+	pthread_mutex_unlock(&p->s->forks[right_fork]);
 	return (false);
 }
 
