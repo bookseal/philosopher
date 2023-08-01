@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/27 21:46:43 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/07/29 15:44:49 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ bool	is_finished_phil_same_total_phil(t_phil **phil_arr)
 	if (s->is_limit && s->finished_phil == s->total_phil)
 	{
 		pthread_mutex_unlock(&s->m_finished_phil);
+		pthread_mutex_lock(&s->m_dead);
+		s->is_dead = true;
+		pthread_mutex_unlock(&s->m_dead);
 		return (true);
 	}
 	pthread_mutex_unlock(&s->m_finished_phil);
