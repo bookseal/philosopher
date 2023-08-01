@@ -6,13 +6,13 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/29 15:44:49 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/01 15:40:21 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-bool	is_finished_phil_same_total_phil(t_phil **phil_arr)
+int	is_finished_phil_same_total_phil(t_phil **phil_arr)
 {
 	t_status	*s;
 
@@ -22,15 +22,15 @@ bool	is_finished_phil_same_total_phil(t_phil **phil_arr)
 	{
 		pthread_mutex_unlock(&s->m_finished_phil);
 		pthread_mutex_lock(&s->m_dead);
-		s->is_dead = true;
+		s->is_dead = TRUE;
 		pthread_mutex_unlock(&s->m_dead);
-		return (true);
+		return (TRUE);
 	}
 	pthread_mutex_unlock(&s->m_finished_phil);
-	return (false);
+	return (FALSE);
 }
 
-bool	is_one_dead(t_phil **phil_arr)
+int	is_one_dead(t_phil **phil_arr)
 {
 	t_status	*s;
 	int			idx;
@@ -46,15 +46,15 @@ bool	is_one_dead(t_phil **phil_arr)
 		{
 			pthread_mutex_unlock(&s->m_last_meal);
 			pthread_mutex_lock(&s->m_dead);
-			s->is_dead = true;
+			s->is_dead = TRUE;
 			pthread_mutex_unlock(&s->m_dead);
 			print(phil_arr[idx], "died");
-			return (true);
+			return (TRUE);
 		}
 		pthread_mutex_unlock(&s->m_last_meal);
 		idx++;
 	}
-	return (false);
+	return (FALSE);
 }
 
 void	*monitor(void *ptr)
@@ -65,7 +65,7 @@ void	*monitor(void *ptr)
 	while (1)
 	{
 		pthread_mutex_lock(&phil_arr[0]->s->m_dead);
-		if (phil_arr[0]->s->is_dead == true)
+		if (phil_arr[0]->s->is_dead == TRUE)
 		{
 			pthread_mutex_unlock(&phil_arr[0]->s->m_dead);
 			return (NULL);

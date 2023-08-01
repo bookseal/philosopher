@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 20:21:20 by gichlee           #+#    #+#             */
-/*   Updated: 2023/08/01 15:08:27 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/01 15:46:06 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_status	*create_status(int *argv_int, int argc)
 	status->time_to_sleep = argv_int[4];
 	if (argc == 6)
 	{
-		status->is_limit = true;
+		status->is_limit = TRUE;
 		status->num_must_eat = argv_int[5];
 	}
 	if (argc == 6 && status->num_must_eat == 0)
@@ -51,7 +51,7 @@ t_status	*parsing(int argc, char **argv)
 	t_status	*status;
 	int			idx;
 
-	if (argc < 5 || argc > 6)
+	if (!(argc == 5 || argc == 6))
 		return (parsing_error_free("invalid argumets", 0, 0));
 	argv_int = (int *)ft_calloc(argc, sizeof(int));
 	if (!argv_int)

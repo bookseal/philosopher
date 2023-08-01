@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 20:31:13 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/24 17:23:12 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/01 15:47:47 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ t_phil	**malloc_phil_arr(t_status **status)
 	s->forks_i = ft_calloc(s->total_phil, sizeof(int));
 	phil_arr = (t_phil **)ft_calloc(s->total_phil, sizeof(t_phil *));
 	if (!phil_arr)
-		;
+		return (0);
 	i = 0;
 	while (i < s->total_phil)
 	{
 		phil_arr[i] = (t_phil *)ft_calloc(1, sizeof(t_phil));
 		if (!phil_arr[i])
-			;
+			return (0);
 		phil_arr[i]->phil_num = i;
 		phil_arr[i]->s = s;
 		i++;

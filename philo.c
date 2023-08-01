@@ -6,48 +6,47 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:12 by gichlee           #+#    #+#             */
-/*   Updated: 2023/08/01 15:09:36 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/01 15:41:07 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-bool	unlock_fork(t_phil *p, int left_fork, int right_fork)
+int	ul_fork(t_phil *p, int fork)
 {
-	p->s->forks_i[left_fork] = false;
-	pthread_mutex_unlock(&p->s->forks[left_fork]);
-	p->s->forks_i[right_fork] = false;
-	pthread_mutex_unlock(&p->s->forks[right_fork]);
-	return (false);
+	p->s->forks_i[fork] = FALSE;
+	pthread_mutex_unlock(&p->s->forks[fork]);
+	return (FALSE);
 }
 
-bool	philo_fork(t_phil *p, int left_fork, int right_fork)
+int	philo_fork(t_phil *p, int left_fork, int right_fork)
 {
 	pthread_mutex_lock(&p->s->forks[left_fork]);
 	if (check_dead(p) || print(p, "has taken a fork"))
-		return (unlock_fork(p, left_fork, right_fork));
-	p->s->forks_i[left_fork] = true;
+		return (ul_fork(p, left_fork));
+	p->s->forks_i[left_fork] = TRUE;
 	if (p->s->total_phil == 1)
-		return (unlock_fork(p, left_fork, right_fork));
+		return (ul_fork(p, left_fork));
 	pthread_mutex_lock(&p->s->forks[right_fork]);
 	if (check_dead(p) || print(p, "has taken a fork"))
-		return (unlock_fork(p, left_fork, right_fork));
-	p->s->forks_i[right_fork] = true;
-	return (true);
+		return (ul_fork(p, left_fork) || ul_fork(p, right_fork));
+	p->s->forks_i[right_fork] = TRUE;
+	return (TRUE);
 }
 
-bool	philo_eating(t_phil *p, int left_fork, int right_fork)
+int	philo_eating(t_phil *p, int left_fork, int right_fork)
 {
 	if (check_dead(p) || print(p, "is eating"))
-		return (unlock_fork(p, left_fork, right_fork));
+		return (ul_fork(p, left_fork) || ul_fork(p, right_fork));
 	pthread_mutex_lock(&p->s->m_last_meal);
 	p->last_meal = get_time_in_ms();
 	pthread_mutex_unlock(&p->s->m_last_meal);
 	sleep_in_ms(p->s->time_to_eat);
-	unlock_fork(p, left_fork, right_fork);
+	ul_fork(p, left_fork);
+	ul_fork(p, right_fork);
 	if (finish_phil(p))
-		return (false);
-	return (true);
+		return (FALSE);
+	return (TRUE);
 }
 
 void	philo_loop(t_phil *p, int left_fork, int right_fork)

@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:12:20 by gichlee           #+#    #+#             */
-/*   Updated: 2023/08/01 11:57:29 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/01 15:33:56 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	sleep_in_ms(int sleep_ms)
 
 	start_ms = get_time_in_ms();
 	while (get_time_in_ms() - start_ms < (size_t)sleep_ms)
-		usleep(100);
+		usleep(50);
 }

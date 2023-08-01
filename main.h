@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 14:17:57 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/27 21:46:32 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/01 15:42:27 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/time.h>
-# include <stdbool.h>
 
 # define TRUE 1
 # define FALSE 0
@@ -30,12 +29,12 @@ typedef struct s_status
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_must_eat;
-	bool			is_limit;
+	int				is_limit;
 	int				finished_phil;
 	pthread_t		*phil_threads;
 	pthread_mutex_t	*forks;
 	int				*forks_i;
-	bool			is_dead;
+	int				is_dead;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_dead;
 	pthread_mutex_t	m_last_meal;
@@ -51,8 +50,8 @@ typedef struct s_phil
 	struct s_status	*s;
 }	t_phil;
 
-bool		finish_phil(t_phil *p);
-bool		check_dead(t_phil *p);
+int			finish_phil(t_phil *p);
+int			check_dead(t_phil *p);
 t_phil		**malloc_phil_arr(t_status **status);
 int			print(t_phil *p, char *msg);
 void		sleep_in_ms(int sleep_ms);

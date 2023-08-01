@@ -6,7 +6,7 @@
 #    By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/19 04:52:36 by leegichan         #+#    #+#              #
-#    Updated: 2023/08/01 15:07:45 by gichlee          ###   ########.fr        #
+#    Updated: 2023/08/01 15:37:49 by gichlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,19 +26,19 @@ SRC= 	main.c \
 		print.c \
 		thread_check.c \
 
-OBJ=$(SRC:%.c=%.o)
+OBJS=$(SRC:%.c=%.o)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) $(CFLAGS) -o $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) $(CFLAGS) -o $(NAME)
 
 .PHONY: all
 all: $(NAME)
 
 .PHONY: clean
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJS)
 
 .PHONY: fclean
 fclean: clean
@@ -46,5 +46,5 @@ fclean: clean
 
 .PHONY: re
 re: 
-	make fclean 
+	make fclean
 	make all
