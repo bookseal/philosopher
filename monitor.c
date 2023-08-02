@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:19:52 by gichlee           #+#    #+#             */
-/*   Updated: 2023/08/01 15:40:21 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/02 19:58:33 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	is_one_dead(t_phil **phil_arr)
 			pthread_mutex_lock(&s->m_dead);
 			s->is_dead = TRUE;
 			pthread_mutex_unlock(&s->m_dead);
-			print(phil_arr[idx], "died");
+			print_dead(phil_arr[idx]);
 			return (TRUE);
 		}
 		pthread_mutex_unlock(&s->m_last_meal);
