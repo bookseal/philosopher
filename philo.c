@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:08:12 by gichlee           #+#    #+#             */
-/*   Updated: 2023/08/01 15:41:07 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/04 14:50:38 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int	philo_eating(t_phil *p, int left_fork, int right_fork)
 	sleep_in_ms(p->s->time_to_eat);
 	ul_fork(p, left_fork);
 	ul_fork(p, right_fork);
-	if (finish_phil(p))
-		return (FALSE);
+	count_eating(p);
 	return (TRUE);
 }
 

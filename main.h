@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 14:17:57 by gichlee           #+#    #+#             */
-/*   Updated: 2023/08/02 19:59:33 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/04 15:29:19 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_phil
 	struct s_status	*s;
 }	t_phil;
 
-int			finish_phil(t_phil *p);
+void		count_eating(t_phil *p);
 int			check_dead(t_phil *p);
 t_phil		**malloc_phil_arr(t_status **status);
 int			print(t_phil *p, char *msg);

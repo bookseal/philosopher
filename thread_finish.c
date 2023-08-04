@@ -6,7 +6,7 @@
 /*   By: gichlee <gichlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:03:22 by gichlee           #+#    #+#             */
-/*   Updated: 2023/07/24 17:23:32 by gichlee          ###   ########.fr       */
+/*   Updated: 2023/08/04 13:39:03 by gichlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	free_all(t_status *s, t_phil **phil_arr)
 		free(phil_arr[i]);
 		i++;
 	}
+	free(phil_arr);
 	free(s);
 }
 
